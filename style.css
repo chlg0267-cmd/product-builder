@@ -474,5 +474,223 @@ body::before {
   .faq-item { padding: 12px 14px; }
   .faq-item summary { font-size: 13px; }
   .disclaimer-card { padding: 20px 18px; }
-  .footer-nav { gap: 16px; }
+  .footer-nav { gap: 14px 16px; }
+}
+
+/* ─────────────────────────────────────────────────────
+   헤더 네비게이션
+   ───────────────────────────────────────────────────── */
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header-nav .logo {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 16px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.header-nav .header-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.header-nav .header-links a {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.15s;
+}
+.header-nav .header-links a:hover { color: var(--accent); }
+
+/* ─────────────────────────────────────────────────────
+   브레드크럼 (서브페이지 상단)
+   ───────────────────────────────────────────────────── */
+.breadcrumb {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+  letter-spacing: 0.04em;
+}
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb span { margin: 0 6px; color: var(--text-dim); }
+
+/* ─────────────────────────────────────────────────────
+   hero-note (면책 미니 배너)
+   ───────────────────────────────────────────────────── */
+.hero-note {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 8px 14px;
+  background: rgba(232,69,60,0.08);
+  border: 1px solid rgba(232,69,60,0.2);
+  border-radius: 100px;
+  font-size: 11px;
+  color: rgba(240,238,232,0.72);
+  max-width: 420px;
+  line-height: 1.5;
+}
+.hero-note strong { color: #f07066; }
+
+/* ─────────────────────────────────────────────────────
+   페이지 카드 (교육 콘텐츠 소개)
+   ───────────────────────────────────────────────────── */
+.page-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+.page-card {
+  display: block;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 18px 20px;
+  text-decoration: none;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.page-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245,200,66,0.35);
+  box-shadow: 0 6px 24px rgba(245,200,66,0.08);
+}
+.pc-icon { font-size: 24px; margin-bottom: 8px; }
+.pc-title {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.pc-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ─────────────────────────────────────────────────────
+   데이터 테이블 (통계 페이지)
+   ───────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  margin: 14px 0 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.data-table thead th {
+  background: var(--surface2);
+  color: var(--text-muted);
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border);
+}
+.data-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.data-table strong { color: var(--text); }
+
+.num-table {
+  font-size: 12px;
+}
+.num-table td { padding: 8px 10px; text-align: center; }
+.num-table thead th { text-align: center; padding: 10px; font-size: 10px; }
+.num-table td.hi { color: var(--green); background: rgba(62,207,142,0.05); }
+.num-table td.lo { color: #f07066; background: rgba(232,69,60,0.05); }
+
+/* ─────────────────────────────────────────────────────
+   callout (강조 박스)
+   ───────────────────────────────────────────────────── */
+.callout {
+  background: rgba(245,200,66,0.06);
+  border: 1px solid rgba(245,200,66,0.22);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 18px 0;
+}
+.callout p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(240,238,232,0.78);
+  margin: 0;
+}
+.callout p strong { color: var(--accent); }
+.callout a { color: var(--accent); text-decoration: underline; }
+
+/* ─────────────────────────────────────────────────────
+   서브페이지 하단 링크 (관련 페이지 안내)
+   ───────────────────────────────────────────────────── */
+.subpage-links {
+  display: flex;
+  gap: 10px;
+  margin: 3rem 0 0;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.subpage-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.subpage-link:hover {
+  color: var(--accent);
+  border-color: rgba(245,200,66,0.35);
+  background: rgba(245,200,66,0.04);
+}
+
+/* ─────────────────────────────────────────────────────
+   h3 (서브페이지 부제목)
+   ───────────────────────────────────────────────────── */
+.subpage h3 {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 700;
+  margin: 22px 0 10px;
+  letter-spacing: -0.005em;
+}
+
+@media (max-width: 600px) {
+  .page-cards { grid-template-columns: 1fr; }
+  .header-nav .logo { font-size: 14px; }
+  .header-nav .header-links { gap: 14px; }
+  .header-nav .header-links a { font-size: 11px; }
+  .hero-note { font-size: 10px; }
 }
