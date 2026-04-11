@@ -1,14 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotto Number Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="container">
+        <h1>역대 로또 당첨 번호 분석</h1>
+        <p>당첨 확률이 높은 번호를 기준으로 로또번호를 생성합니다.</p>
+        <div class="buttons">
+            <button id="generate">로또번호 추첨 받기</button>
+            <button id="frequent">자주 나오는 번호 추첨</button>
+        </div>
+        <div class="numbers-display">
+            <h2>추첨된 번호:</h2>
+            <div id="numbers"></div>
+        </div>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
