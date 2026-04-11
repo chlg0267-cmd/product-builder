@@ -6,6 +6,11 @@ on:
     - cron: '0 0 * * 1'
   workflow_dispatch:
     inputs:
+      csv_data:
+        description: '구독자 CSV 본문 또는 이메일 목록 붙여넣기 (비우면 SUBSCRIBER_EMAILS secret 사용). 헤더 포함 CSV / 콤마·줄바꿈 구분 모두 OK — 정규식으로 이메일만 자동 추출.'
+        required: false
+        default: ''
+        type: string
       dry_run:
         description: 'DRY_RUN (실제 발송 없이 로그만 출력)'
         required: false
@@ -30,5 +35,6 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
           SUBSCRIBER_EMAILS: ${{ secrets.SUBSCRIBER_EMAILS }}
+          CSV_DATA: ${{ github.event.inputs.csv_data }}
           DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
         run: node scripts/send-weekly.js

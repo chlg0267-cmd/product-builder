@@ -6,7 +6,10 @@
 // 환경변수:
 //   RESEND_API_KEY     — Resend API 키 (필수)
 //   FROM_EMAIL         — 발신자 주소. 미설정 시 'onboarding@resend.dev' (테스트 한정)
-//   SUBSCRIBER_EMAILS  — 구독자 이메일 콤마 구분 목록
+//   SUBSCRIBER_EMAILS  — 구독자 이메일 콤마/줄바꿈 구분 목록 (정기 발송용 secret)
+//   CSV_DATA           — Formspree CSV 본문 등 임의 텍스트.
+//                        정규식으로 이메일만 추출하므로 CSV/JSON/리스트 어떤 형식이든 OK.
+//                        (수동 일회성 발송용 — 워크플로우 dispatch 입력에서 전달)
 //   DRY_RUN            — '1' 이면 실제 발송 없이 로그만 출력
 
 // ─────────────────────────────────────────────────────────────
@@ -144,15 +147,28 @@ async function sendOne(to, html, subject) {
 // ─────────────────────────────────────────────────────────────
 // 4) main
 // ─────────────────────────────────────────────────────────────
+// 정규식으로 임의 텍스트(CSV/JSON/리스트)에서 이메일만 뽑아 dedupe.
+const EMAIL_RE = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+function extractEmails(blob) {
+  if (!blob) return [];
+  const matches = blob.match(EMAIL_RE) || [];
+  return matches.map((s) => s.toLowerCase());
+}
+
 async function main() {
-  const subscribersRaw = process.env.SUBSCRIBER_EMAILS || '';
-  const subscribers = subscribersRaw
-    .split(/[,\s]+/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const fromSecret = extractEmails(process.env.SUBSCRIBER_EMAILS || '');
+  const fromCsv = extractEmails(process.env.CSV_DATA || '');
+  const subscribers = Array.from(new Set([...fromSecret, ...fromCsv]));
+
+  if (fromCsv.length > 0) {
+    console.log(`CSV_DATA에서 ${fromCsv.length}개 이메일 추출`);
+  }
+  if (fromSecret.length > 0) {
+    console.log(`SUBSCRIBER_EMAILS secret에서 ${fromSecret.length}개 이메일 추출`);
+  }
 
   if (subscribers.length === 0) {
-    console.log('SUBSCRIBER_EMAILS 가 비어 있습니다. 발송 대상이 없어 종료합니다.');
+    console.log('발송 대상이 없습니다 (SUBSCRIBER_EMAILS / CSV_DATA 둘 다 비어 있음). 종료합니다.');
     return;
   }
 
