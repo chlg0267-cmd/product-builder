@@ -125,13 +125,58 @@ function generateHot() {
   }
 }
 
+function initMailForm() {
+  const btn = document.getElementById('mail-btn');
+  const form = document.getElementById('mail-form');
+  const input = document.getElementById('mail-input');
+  const submit = form.querySelector('.mail-submit');
+  const status = document.getElementById('mail-status');
+
+  btn.addEventListener('click', () => {
+    const open = !form.hidden;
+    form.hidden = open;
+    btn.setAttribute('aria-expanded', String(!open));
+    if (!open) setTimeout(() => input.focus(), 50);
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.className = 'mail-status';
+    status.textContent = '전송 중...';
+    submit.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form),
+      });
+      if (res.ok) {
+        status.textContent = '✅ 구독 신청 완료! 매주 추천번호를 보내드릴게요.';
+        status.classList.add('success');
+        form.reset();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        const msg = (data.errors && data.errors.map(x => x.message).join(', ')) || '전송에 실패했습니다.';
+        status.textContent = '⚠️ ' + msg;
+        status.classList.add('error');
+      }
+    } catch (err) {
+      status.textContent = '⚠️ 네트워크 오류로 전송에 실패했습니다.';
+      status.classList.add('error');
+    } finally {
+      submit.disabled = false;
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initHeatmap();
   initHotCold();
-  
+  initMailForm();
+
   document.getElementById('generate-btn').addEventListener('click', generate);
   document.getElementById('hot-btn').addEventListener('click', generateHot);
-  
+
   // Initial generation
   generate();
 });
