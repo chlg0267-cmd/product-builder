@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>가장 자주 나온 번호 vs 가장 덜 나온 번호 — 정말 차이가 있을까 · 로또 6/45 번호 분석기 블로그</title>
+<meta name="description" content="역대 출현 빈도가 높은 HOT 번호와 낮은 COLD 번호가 실제로 예측력 있는 구분인지를 통계적 관점에서 분석합니다.">
+<meta name="publish-date" content="2026-04-11T13:00:00+09:00">
+<meta name="author" content="chlg0267-cmd">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://chlg0267-cmd.github.io/product-builder/blog/04-hot-cold-numbers.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="가장 자주 나온 번호 vs 가장 덜 나온 번호 — 정말 차이가 있을까">
+<meta property="og:description" content="역대 출현 빈도가 높은 HOT 번호와 낮은 COLD 번호가 실제로 예측력 있는 구분인지를 통계적 관점에서 분석합니다.">
+<meta property="og:url" content="https://chlg0267-cmd.github.io/product-builder/blog/04-hot-cold-numbers.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-04-11T13:00:00+09:00">
+
+<!-- Google Search Console -->
+<meta name="google-site-verification" content="k4szCZQrawr6nySB8_WeQNgCVKlX6iVOyahPHS7X2ug" />
+
+<!-- Google AdSense -->
+<meta name="google-adsense-account" content="ca-pub-3325342113116512">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3325342113116512" crossorigin="anonymous"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "가장 자주 나온 번호 vs 가장 덜 나온 번호 — 정말 차이가 있을까",
+  "description": "역대 출현 빈도가 높은 HOT 번호와 낮은 COLD 번호가 실제로 예측력 있는 구분인지를 통계적 관점에서 분석합니다.",
+  "datePublished": "2026-04-11T13:00:00+09:00",
+  "dateModified": "2026-04-11T13:00:00+09:00",
+  "inLanguage": "ko-KR",
+  "author": { "@type": "Person", "name": "chlg0267-cmd" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "로또 6/45 번호 분석기",
+    "url": "https://chlg0267-cmd.github.io/product-builder/"
+  },
+  "mainEntityOfPage": "https://chlg0267-cmd.github.io/product-builder/blog/04-hot-cold-numbers.html"
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="subpage">
+
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span>›</span>
+    <a href="../blog.html">블로그</a>
+    <span>›</span>
+    <span>가장 자주 나온 번호 vs 가장 덜 나온 번호 — 정말 차이가 있을까</span>
+  </nav>
+
+  <article class="blog-post">
+    <div class="post-meta">
+      <time datetime="2026-04-11T13:00:00+09:00">2026년 4월 11일</time>
+    </div>
+    <h1>가장 자주 나온 번호 vs 가장 덜 나온 번호 — 정말 차이가 있을까</h1>
+    <p class="post-lede">"자주 나오는 번호로 사라" 와 "잘 안 나오는 번호가 이제 나올 차례다" — 두 주장은 정반대인데도 모두 확률적으로 틀렸습니다. 그 이유를 같이 풀어봅니다.</p>
+
+<h2>두 가지 상반된 전략</h2>
+<p>로또 번호 선택에 관한 대표적인 두 가지 민간 "전략" 이 있습니다.</p>
+<ul>
+  <li><strong>HOT 전략</strong>: "자주 나오는 번호는 기세가 있으니 계속 나올 것이다."</li>
+  <li><strong>COLD 전략</strong>: "오랫동안 안 나온 번호는 이제 나올 차례다."</li>
+</ul>
+<p>재미있는 점은 이 두 주장이 논리적으로 <em>정반대</em> 라는 것입니다. 같은 데이터를 두고 "기세 유지" 와 "균형 회귀" 라는 완전히 반대되는 결론을 내립니다. 두 사람이 대화하다가 "너는 HOT 을 봐, 나는 COLD 을 볼게" 라고 합의하는 장면을 상상해 보세요. 두 전략이 모두 유효할 수는 없습니다.</p>
+<p>진실은 — <strong>둘 다 틀렸습니다</strong>.</p>
+
+<h2>왜 둘 다 틀린가 — 사건의 독립성</h2>
+<p>확률론의 가장 기본적인 사실 중 하나는 "독립 사건" 이라는 개념입니다. 두 사건이 독립이라는 것은, 한 사건의 결과가 다른 사건의 결과에 영향을 주지 않는다는 뜻입니다. 로또 추첨은 매 회차 완벽하게 독립입니다 — 지난 회차의 결과가 다음 회차의 추첨기 속에 "기억" 될 어떤 물리적 메커니즘도 존재하지 않습니다.</p>
+<p>이것은 추상적인 주장이 아닙니다. 추첨기의 공은 매 회차 똑같은 방식으로 섞이며, 그 공들은 지난 주에 자기가 뽑혔는지 뽑히지 않았는지 "알지 못합니다". 따라서 7 번이 지난 10 회차 동안 한 번도 안 나왔다 해도, 다음 회차에 7 번이 뽑힐 확률은 여전히 정확히 <code>6/45 ≈ 13.3%</code> 입니다.</p>
+
+<h2>관찰된 빈도 차이는 "자연스러운 분산"</h2>
+<p>그런데 실제 데이터를 보면 어떤 번호는 다른 번호보다 더 자주 나온 것처럼 보입니다. 본 사이트의 내장 데이터에서는 1 번이 163 회, 38 번이 197 회 출현했습니다. 차이가 34 회나 납니다. "이건 너무 큰 차이 아닌가?" 라고 생각할 수 있습니다.</p>
+<p>그러나 이 차이를 확률론적으로 해석하면 매우 정상입니다. 1,161 회차 동안 각 번호가 뽑힌 평균 횟수는 약 <code>1,161 × 6/45 ≈ 155</code> 회입니다. 이항분포의 표준편차를 계산해 보면 약 <code>σ ≈ 12</code> 정도이며, 95% 의 번호가 <code>155 ± 24</code> 구간 안에 들어올 것으로 예상됩니다. 실제 데이터의 158 ~ 197 구간은 이 예상과 거의 일치합니다.</p>
+<p>즉 "HOT 번호" 와 "COLD 번호" 의 차이는 <em>정상적인 무작위 변동 범위 안에 있는 자연스러운 편차</em> 이지, 물리적인 "성향" 이 아닙니다.</p>
+
+<h2>대수의 법칙과의 관계</h2>
+<p>통계학의 <strong>대수의 법칙</strong> 은 이 문제를 한 문장으로 요약해 줍니다 — "시행 횟수가 무한히 늘어나면, 각 사건의 관찰 빈도는 이론 확률로 수렴한다." 로또의 경우, 회차가 많이 쌓일수록 모든 번호의 출현 횟수가 서로 비슷해진다는 예측입니다. 1,161 회차는 이미 상당히 긴 시계열이며, 관찰된 빈도 분포가 이론 예측에 잘 부합한다는 것은 추첨기가 <em>공정하다</em> 는 가장 강한 증거입니다.</p>
+
+<h2>가중치 추첨 도구는 "예측 도구" 가 아니다</h2>
+<p>그렇다면 이 사이트가 제공하는 "가중치 추첨" 이나 "자주 나오는 번호 추첨" 기능은 무엇일까요? 그것은 <em>예측 도구가 아니라 시각화 도구</em> 입니다. "만약 당신이 역대 빈도가 높은 번호에 편향된 조합을 고르고 싶다면, 그 조합이 어떤 모양일까" 라는 질문에 답을 보여주는 것 뿐입니다.</p>
+<p>이 답은 흥미롭지만, 미래 당첨 확률을 올려주지 않습니다. 앞에서 설명한 것처럼 추첨은 독립이기 때문입니다. 만약 이 기능을 쓰신다면, "재미와 학습을 위한 시각화" 로 사용해 주세요.</p>
+
+    <div class="post-footer">
+      <p>이 글은 <a href="../blog.html">로또 6/45 번호 분석기 블로그</a> 의 일부입니다. 본 사이트는 교육·오락 목적의 통계 시각화 도구이며, 당첨을 예측·보장하지 않습니다. 도박 문제로 어려움을 겪고 계시다면 <strong>한국도박문제예방치유원(☎ 1336)</strong> 에 문의해 주세요.</p>
+    </div>
+  </article>
+
+  <nav class="subpage-links">
+    <a href="../blog.html" class="subpage-link">← 블로그 목록</a>
+    <a href="../index.html" class="subpage-link">🎱 홈으로</a>
+  </nav>
+
+  <footer class="site-footer">
+    <nav class="footer-nav">
+      <a href="../index.html">홈</a>
+      <a href="../blog.html">블로그</a>
+      <a href="../guide.html">로또 가이드</a>
+      <a href="../statistics.html">통계 분석</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+      <a href="../terms.html">이용약관</a>
+    </nav>
+    <p class="footer-copy">© 2026 로또 6/45 번호 분석기 · 본 사이트는 오락 및 학습 목적이며 당첨을 보장하지 않습니다.</p>
+  </footer>
+
+</div>
+</body>
+</html>

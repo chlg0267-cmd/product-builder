@@ -1,0 +1,85 @@
+name: Publish Blog Post
+
+on:
+  schedule:
+    # 매 짝수 시각 정각 (UTC). 9시간 차이이므로 KST 기준 09시/11시/13시... 에 발행됩니다.
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+    inputs:
+      count:
+        description: '이번 실행에서 발행할 드래프트 수 (기본 1)'
+        required: false
+        default: '1'
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Publish next draft(s)
+        id: publish
+        env:
+          COUNT: ${{ github.event.inputs.count || '1' }}
+        run: |
+          set -e
+          shopt -s nullglob
+          drafts=(_drafts/*.html)
+          if [ ${#drafts[@]} -eq 0 ]; then
+            echo "남은 드래프트가 없습니다 — 발행할 글이 없음. 그대로 Pages만 재배포합니다."
+            echo "published=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # 드래프트는 파일명 오름차순으로 정렬되어 있어서 01-*, 02-* 순으로 발행됨
+          n=${COUNT:-1}
+          if [ "$n" -gt "${#drafts[@]}" ]; then n=${#drafts[@]}; fi
+
+          mkdir -p blog
+          for i in $(seq 0 $((n-1))); do
+            src="${drafts[$i]}"
+            dst="blog/$(basename "$src")"
+            mv "$src" "$dst"
+            echo "  → published: $(basename "$src")"
+          done
+
+          node scripts/build-blog-index.js
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "publish(blog): auto-publish $n post(s)"
+          git push
+
+          echo "published=$n" >> "$GITHUB_OUTPUT"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

@@ -694,3 +694,170 @@ body::before {
   .header-nav .header-links a { font-size: 11px; }
   .hero-note { font-size: 10px; }
 }
+
+/* ─────────────────────────────────────────────────────
+   블로그 목록 (blog.html)
+   ───────────────────────────────────────────────────── */
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+.blog-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  text-decoration: none;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.blog-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245,200,66,0.35);
+  box-shadow: 0 8px 30px rgba(245,200,66,0.06);
+}
+.bc-date {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.bc-title {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.bc-lede {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.bc-meta {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+.blog-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 20px;
+  background: var(--surface);
+  border-radius: 14px;
+}
+
+/* ─────────────────────────────────────────────────────
+   블로그 본문 (blog/*.html)
+   ───────────────────────────────────────────────────── */
+.blog-post {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  margin-bottom: 2rem;
+}
+.blog-post .post-meta {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.blog-post h1 {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: clamp(26px, 5vw, 36px);
+  line-height: 1.2;
+  color: var(--text);
+  margin: 0 0 20px;
+  letter-spacing: -0.015em;
+}
+.blog-post .post-lede {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--accent);
+  font-weight: 400;
+  padding: 16px 18px;
+  background: rgba(245,200,66,0.05);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  margin: 0 0 28px;
+}
+.blog-post h2 {
+  font-size: 17px;
+  color: var(--text);
+  font-weight: 700;
+  margin: 32px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -0.005em;
+  text-transform: none;
+}
+.blog-post h3 {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 700;
+  margin: 22px 0 10px;
+  letter-spacing: -0.005em;
+}
+.blog-post p {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.blog-post p strong { color: var(--text); }
+.blog-post ul, .blog-post ol {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.85;
+  padding-left: 24px;
+  margin: 4px 0 16px;
+}
+.blog-post li { margin-bottom: 8px; }
+.blog-post li strong { color: var(--text); }
+.blog-post a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(245,200,66,0.35);
+  text-underline-offset: 3px;
+}
+.blog-post a:hover { text-decoration-color: var(--accent); }
+.blog-post code {
+  background: var(--surface2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
+.blog-post .post-footer {
+  margin-top: 40px;
+  padding: 18px 20px;
+  background: var(--surface2);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.blog-post .post-footer p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin: 0;
+}
+.blog-post .post-footer strong {
+  color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .blog-post { padding: 24px 20px; }
+  .blog-post .post-lede { font-size: 14px; padding: 14px 16px; }
+  .blog-post h2 { font-size: 16px; }
+  .blog-post p, .blog-post ul, .blog-post ol { font-size: 13px; }
+  .blog-card { padding: 18px 20px; }
+  .bc-title { font-size: 16px; }
+}
