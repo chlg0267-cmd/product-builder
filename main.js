@@ -1,41 +1,137 @@
+const freq = {
+  1:163,2:158,3:171,4:175,5:162,6:178,7:170,8:181,9:166,10:174,
+  11:179,12:183,13:160,14:172,15:168,16:190,17:177,18:196,19:165,20:185,
+  21:173,22:188,23:182,24:176,25:193,26:187,27:169,28:195,29:180,30:184,
+  31:178,32:171,33:167,34:192,35:176,36:189,37:162,38:197,39:174,40:186,
+  41:170,42:183,43:177,44:168,45:161
+};
+
+const vals = Object.values(freq);
+const maxF = Math.max(...vals), minF = Math.min(...vals);
+const range = maxF - minF;
+
+function freqClass(f) {
+  const p = (f - minF) / range;
+  if (p < 0.2)  return 'freq-vlow';
+  if (p < 0.4)  return 'freq-low';
+  if (p < 0.6)  return 'freq-mid';
+  if (p < 0.8)  return 'freq-high';
+  return 'freq-vhigh';
+}
+
+function initHeatmap() {
+  const hm = document.getElementById('heatmap');
+  hm.innerHTML = '';
+  for (let i = 1; i <= 45; i++) {
+    const d = document.createElement('div');
+    d.className = 'hcell ' + freqClass(freq[i]);
+    d.textContent = i;
+    d.setAttribute('data-tip', i + '번: ' + freq[i] + '회');
+    hm.appendChild(d);
+  }
+}
+
+function initHotCold() {
+  const sorted = Object.entries(freq).sort((a,b) => b[1]-a[1]);
+  const hotNums = sorted.slice(0,10).map(x=>+x[0]);
+  const coldNums = sorted.slice(-10).map(x=>+x[0]);
+
+  const hb = document.getElementById('hot-balls');
+  hb.innerHTML = '';
+  hotNums.forEach(n => {
+    hb.innerHTML += `<div class="ball hot">${n}</div>`;
+  });
+
+  const cb = document.getElementById('cold-balls');
+  cb.innerHTML = '';
+  coldNums.forEach(n => {
+    cb.innerHTML += `<div class="ball cold">${n}</div>`;
+  });
+
+  const bl = document.getElementById('bar-list');
+  bl.innerHTML = '';
+  const top20 = sorted.slice(0,20);
+  const bmax = +top20[0][1];
+  top20.forEach(([n,c]) => {
+    const pct = Math.round(c/bmax*100);
+    bl.innerHTML += `<div class="bar-item">
+      <span class="bn">${n}</span>
+      <div class="btrack"><div class="bfill" style="width:${pct}%"></div></div>
+      <span class="bcnt">${c}회</span>
+    </div>`;
+  });
+}
+
+// 번호 생성
+function weightedPick(excl) {
+  const pool = [];
+  for (let n=1;n<=45;n++) {
+    if (excl.includes(n)) continue;
+    const w = Math.round((freq[n]-minF)/range*4)+1;
+    for (let j=0;j<w;j++) pool.push(n);
+  }
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function pickSet() {
+  const picks=[];
+  while(picks.length<6) picks.push(weightedPick(picks));
+  return picks.sort((a,b)=>a-b);
+}
+
+function score(picks) {
+  const avg = picks.reduce((s,n)=>s+freq[n],0)/picks.length;
+  return Math.round((avg-minF)/range*100);
+}
+
+const ballClass = ['r1','r2','r3','r4','r5','r6'];
+
+function generate() {
+  const res = document.getElementById('results');
+  res.innerHTML = '';
+  for (let i=0;i<5;i++) {
+    const picks = pickSet();
+    const sc = score(picks);
+    const stars = sc>=75?'★★★':sc>=50?'★★☆':'★☆☆';
+    const balls = picks.map((n,idx)=>`<div class="rball ${ballClass[idx]}">${n}</div>`).join('');
+    const row = document.createElement('div');
+    row.className = 'result-row';
+    row.style.animationDelay = (i*0.07)+'s';
+    row.innerHTML = `
+      <span class="rlabel">${i+1}번</span>
+      <div class="rballs">${balls}</div>
+      <div class="rscore">${stars}<span>${sc}점</span></div>`;
+    res.appendChild(row);
+  }
+}
+
+function generateHot() {
+  const res = document.getElementById('results');
+  res.innerHTML = '';
+  for (let i=0;i<5;i++) {
+    let picks, sc, tries=0;
+    do { picks=pickSet(); sc=score(picks); tries++; } while(sc<70 && tries<500);
+    const stars = sc>=75?'★★★':'★★☆';
+    const balls = picks.map((n,idx)=>`<div class="rball ${ballClass[idx]}">${n}</div>`).join('');
+    const row = document.createElement('div');
+    row.className = 'result-row';
+    row.style.animationDelay = (i*0.07)+'s';
+    row.style.borderColor = 'rgba(239,124,58,0.35)';
+    row.innerHTML = `
+      <span class="rlabel" style="color:var(--hot)">${i+1}번</span>
+      <div class="rballs">${balls}</div>
+      <div class="rscore" style="color:var(--hot)">${stars}<span style="color:var(--hot)">${sc}점</span></div>`;
+    res.appendChild(row);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const generateBtn = document.getElementById('generate');
-    const frequentBtn = document.getElementById('frequent');
-    const numbersDisplay = document.getElementById('numbers');
-
-    // Placeholder for historical data analysis (to be implemented)
-    const historicalData = {
-        '1': 50, '2': 45, '3': 55, '4': 60, '5': 40, '6': 65, '7': 70, '8': 35, '9': 75, '10': 80,
-        '11': 30, '12': 85, '13': 90, '14': 25, '15': 95, '16': 20, '17': 100, '18': 15, '19': 105, '20': 10,
-        '21': 110, '22': 5, '23': 115, '24': 1, '25': 120, '26': 4, '27': 125, '28': 3, '29': 130, '30': 2,
-        '31': 135, '32': 6, '33': 140, '34': 7, '35': 145, '36': 8, '37': 150, '38': 9, '39': 155, '40': 11,
-        '41': 160, '42': 12, '43': 165, '44': 13, '45': 170
-    };
-
-    function generateNumbers(useFrequency = false) {
-        numbersDisplay.innerHTML = '';
-        const numbers = new Set();
-
-        if (useFrequency) {
-            const sortedByFrequency = Object.keys(historicalData).sort((a, b) => historicalData[b] - historicalData[a]);
-            while (numbers.size < 6) {
-                const randomIndex = Math.floor(Math.random() * 10); // Top 10 most frequent
-                numbers.add(parseInt(sortedByFrequency[randomIndex], 10));
-            }
-        } else {
-            while (numbers.size < 6) {
-                numbers.add(Math.floor(Math.random() * 45) + 1);
-            }
-        }
-
-        Array.from(numbers).sort((a, b) => a - b).forEach(number => {
-            const numberDiv = document.createElement('div');
-            numberDiv.className = 'number';
-            numberDiv.textContent = number;
-            numbersDisplay.appendChild(numberDiv);
-        });
-    }
-
-    generateBtn.addEventListener('click', () => generateNumbers(false));
-    frequentBtn.addEventListener('click', () => generateNumbers(true));
+  initHeatmap();
+  initHotCold();
+  
+  document.getElementById('generate-btn').addEventListener('click', generate);
+  document.getElementById('hot-btn').addEventListener('click', generateHot);
+  
+  // Initial generation
+  generate();
 });
