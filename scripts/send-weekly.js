@@ -156,20 +156,29 @@ function extractEmails(blob) {
 }
 
 async function main() {
-  const fromSecret = extractEmails(process.env.SUBSCRIBER_EMAILS || '');
-  const fromCsv = extractEmails(process.env.CSV_DATA || '');
+  const subRaw = process.env.SUBSCRIBER_EMAILS || '';
+  const csvRaw = process.env.CSV_DATA || '';
+
+  // 진단 출력 (값은 노출하지 않고 길이/존재 여부만)
+  console.log('── 입력 진단 ───────────────────');
+  console.log(`  SUBSCRIBER_EMAILS  : ${subRaw.length}자 (${subRaw ? 'set' : 'empty'})`);
+  console.log(`  CSV_DATA           : ${csvRaw.length}자 (${csvRaw ? 'set' : 'empty'})`);
+  console.log(`  RESEND_API_KEY     : ${process.env.RESEND_API_KEY ? 'set' : 'EMPTY'}`);
+  console.log(`  FROM_EMAIL         : ${process.env.FROM_EMAIL || '(unset → onboarding@resend.dev)'}`);
+  console.log(`  DRY_RUN            : ${process.env.DRY_RUN || '0'}`);
+
+  const fromSecret = extractEmails(subRaw);
+  const fromCsv = extractEmails(csvRaw);
   const subscribers = Array.from(new Set([...fromSecret, ...fromCsv]));
 
-  if (fromCsv.length > 0) {
-    console.log(`CSV_DATA에서 ${fromCsv.length}개 이메일 추출`);
-  }
-  if (fromSecret.length > 0) {
-    console.log(`SUBSCRIBER_EMAILS secret에서 ${fromSecret.length}개 이메일 추출`);
-  }
+  console.log(`  → SUBSCRIBER_EMAILS에서 ${fromSecret.length}개 이메일 추출`);
+  console.log(`  → CSV_DATA에서 ${fromCsv.length}개 이메일 추출`);
+  console.log(`  → dedupe 후 발송 대상: ${subscribers.length}명`);
+  console.log('────────────────────────────────');
 
   if (subscribers.length === 0) {
-    console.log('발송 대상이 없습니다 (SUBSCRIBER_EMAILS / CSV_DATA 둘 다 비어 있음). 종료합니다.');
-    return;
+    console.error('❌ 발송 대상이 0명입니다. SUBSCRIBER_EMAILS secret 또는 csv_data 입력을 확인하세요.');
+    process.exit(2);
   }
 
   const normal = generateNormal();
